@@ -30,22 +30,6 @@ from pages.reportgenerator import *
 layout = html.Div([
     html.H1("Sistema de Contrataciones"),
     
-    html.H1("Selección de Tipo de Contratación"),
-    dcc.Dropdown(
-        id='tipo-contratacion-dropdown',
-        options=[
-            {'label': 'Contratación ANPE', 'value': 'ANPE'},
-            {'label': 'Contratación Directa', 'value': 'Directa'},
-            {'label': 'Contratación EPNE', 'value': 'EPNE'},
-            {'label': 'Contratación Licitación Pública Nacional', 'value': 'Licitación Nacional'},
-            {'label': 'Contratación Licitación Pública Internacional', 'value': 'Licitación Internacional'},
-            {'label': 'Contratación Excepción', 'value': 'Excepción'},
-            {'label': 'Contratación Menor', 'value': 'Menor'}
-        ],
-        placeholder="Seleccione un tipo de contratación"
-    ),
-    html.Div(id='accion-output'),
-    
     # Botón para subir el archivo Excel
     dcc.Upload(
         id='upload-excel',
@@ -111,47 +95,3 @@ def generate_document(n_clicks, excel_filename, template_filename):
         print(f"Archivo de salida {output_name} generado exitosamente.")
         return dcc.send_file(output_path)
     return None
-
-# Callback para mostrar la acción basada en la selección
-@callback(
-    Output('accion-output', 'children'),
-    [Input('tipo-contratacion-dropdown', 'value')]
-)
-def mostrar_accion(seleccion):
-    if seleccion:
-        if seleccion == 'ANPE':
-            return html.Div([
-                html.H3("Acción para Contratación ANPE"),
-                html.P("Esta iniciado un Proceso de Contratación ANPE.")
-            ])
-        elif seleccion == 'Directa':
-            return html.Div([
-                html.H3("Acción para Contratación Directa"),
-                html.P("Esta iniciado un Proceso de Contratación Directa.")
-            ])
-        elif seleccion == 'EPNE':
-            return html.Div([
-                html.H3("Acción para Contratación EPNE"),
-                html.P("Esta iniciado un Proceso de Contratación EPNE.")
-            ])
-        elif seleccion == 'Licitación Nacional':
-            return html.Div([
-                html.H3("Acción para Contratación Licitación Pública Nacional"),
-                html.P("Esta iniciado un Proceso de Contratación Licitación Pública Nacional.")
-            ])
-        elif seleccion == 'Licitación Internacional':
-            return html.Div([
-                html.H3("Acción para Contratación Licitación Pública Internacional"),
-                html.P("Esta iniciado un Proceso de Contratación Licitación Pública Internacional.")
-            ])
-        elif seleccion == 'Excepción':
-            return html.Div([
-                html.H3("Acción para Contratación Excepción"),
-                html.P("Esta iniciado un Proceso de Contratación Excepción.")
-            ])
-        elif seleccion == 'Menor':
-            return html.Div([
-                html.H3("Acción para Contratación Menor"),
-                html.P("Esta iniciado un Proceso de Contratación Menor.")
-            ])
-    return html.Div()
